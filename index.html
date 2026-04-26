@@ -3,64 +3,254 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>madowaku</title>
-  <meta name="description" content="madowaku - 小さな発見のある体験をつくっています。" />
+  <title>madowaku works</title>
+  <meta
+    name="description"
+    content="madowaku が育てている App Gardenium、Neon Brainstorm、Neon Sprout への入口です。小さなアイデアをアプリやゲームの形に育てていく実験場。"
+  />
   <style>
+    :root {
+      color-scheme: dark;
+      --bg: #090b12;
+      --panel: rgba(255, 255, 255, 0.07);
+      --panel-strong: rgba(255, 255, 255, 0.11);
+      --text: #f5f7fb;
+      --muted: #b7bfce;
+      --line: rgba(255, 255, 255, 0.16);
+      --green: #7ee787;
+      --cyan: #7dd3fc;
+      --pink: #f0abfc;
+      --amber: #facc15;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
       margin: 0;
-      padding: 64px 24px;
-      background: #fafafa;
-      color: #222;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(125, 211, 252, 0.24), transparent 34rem),
+        radial-gradient(circle at top right, rgba(240, 171, 252, 0.20), transparent 30rem),
+        radial-gradient(circle at bottom center, rgba(126, 231, 135, 0.16), transparent 28rem),
+        var(--bg);
       line-height: 1.7;
     }
-    main {
-      max-width: 640px;
-      margin: 0 auto;
-    }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 0.5em;
-    }
-    section {
-      margin-top: 2.5em;
-    }
+
     a {
-      color: #3366cc;
+      color: inherit;
       text-decoration: none;
     }
-    a:hover {
-      text-decoration: underline;
+
+    .page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 56px 0 48px;
+    }
+
+    .hero {
+      padding: 56px clamp(24px, 5vw, 56px);
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.04));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -8rem -14rem auto;
+      width: 26rem;
+      height: 26rem;
+      border-radius: 999px;
+      background: rgba(125, 211, 252, 0.10);
+      filter: blur(12px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 18px;
+      padding: 7px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.06);
+      font-size: 0.9rem;
+    }
+
+    .eyebrow::before {
+      content: "✦";
+      color: var(--cyan);
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 760px;
+      font-size: clamp(2.4rem, 7vw, 5rem);
+      line-height: 1.02;
+      letter-spacing: -0.06em;
+    }
+
+    .lead {
+      margin: 24px 0 0;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .card {
+      min-height: 100%;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--panel);
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .card:hover,
+    .card:focus-visible {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.34);
+      background: var(--panel-strong);
+      outline: none;
+    }
+
+    .tag {
+      display: inline-flex;
+      margin-bottom: 18px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #0b1020;
+      font-weight: 700;
+    }
+
+    .gardenium .tag { background: var(--green); }
+    .brainstorm .tag { background: var(--cyan); }
+    .sprout .tag { background: var(--pink); }
+
+    h2 {
+      margin: 0;
+      font-size: 1.35rem;
+      line-height: 1.25;
+    }
+
+    .card p {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .open {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 22px;
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .open::after {
+      content: "→";
+      transition: transform 180ms ease;
+    }
+
+    .card:hover .open::after,
+    .card:focus-visible .open::after {
+      transform: translateX(3px);
+    }
+
+    .note {
+      margin: 28px 0 0;
+      padding: 18px 20px;
+      border: 1px dashed rgba(255, 255, 255, 0.24);
+      border-radius: 20px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.04);
+      font-size: 0.95rem;
+    }
+
+    footer {
+      margin-top: 36px;
+      color: rgba(245, 247, 251, 0.58);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    @media (max-width: 860px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        border-radius: 24px;
+      }
     }
   </style>
 </head>
 <body>
-  <main>
-  <h1>madowaku</h1>
-  <p>
-    日常の中に、少しだけ立ち止まる時間を。<br />
-    madowaku は、小さな発見のある体験をつくっています。
-  </p>
+  <main class="page">
+    <section class="hero" aria-labelledby="page-title">
+      <p class="eyebrow">madowaku works</p>
+      <h1 id="page-title">小さなアイデアを、アプリやゲームの形に育てる。</h1>
+      <p class="lead">
+        ここは madowaku が育てている実験場への入口です。思いつき、素材、音、相談、テスター募集――まだ小さなタネを、少しずつ形にしていきます。
+      </p>
+    </section>
 
-  <section>
-    <h2>Apps</h2>
-    <ul>
-      <li>
-        <strong>SakuraAme</strong><br />
-        雨とタングドラムの環境音アプリ<br />
-        <a href="https://play.google.com/store/apps/details?id=io.github.madobeno.twa&pli=1">Google Play</a>
-      </li>
-    </ul>
-  </section>
+    <section class="cards" aria-label="Projects">
+      <a class="card gardenium" href="https://app-gardenium-21754549540.asia-east1.run.app/">
+        <span class="tag">App ideas</span>
+        <h2>App Gardenium</h2>
+        <p>
+          「こんなアプリがあったらいいな」を置いて、みんなで育てる温室。アイデア、相談、テスター募集、応援をつなげる場所です。
+        </p>
+        <span class="open">開く</span>
+      </a>
 
-  <section>
-    <h2>Contact</h2>
-    <ul>
-      <li><a href="https://x.com/jittersan" target="_blank" rel="noopener">X</a></li>
-      <li><a href="https://github.com/madowaku" target="_blank" rel="noopener">GitHub</a></li>
-      <li><a href="mailto:raindrum909@gmail.com">Email</a></li>
-    </ul>
-  </section>
-</main>
+      <a class="card brainstorm" href="https://neon-brainstorm-21754549540.us-west1.run.app/">
+        <span class="tag">Game seeds</span>
+        <h2>Neon Brainstorm</h2>
+        <p>
+          ゲームのタネや素材から、AI と一緒にプロトタイプを育てるネオンな実験場。ひらめきをみんなでつなげます。
+        </p>
+        <span class="open">開く</span>
+      </a>
+
+      <a class="card sprout" href="https://neon-sprout-21754549540.us-west1.run.app/">
+        <span class="tag">Quiet garden</span>
+        <h2>Neon Sprout</h2>
+        <p>
+          音、雰囲気、小さな発想から、静かに創作の芽を育てる庭。急がず、やさしく、形になるまで見守る場所です。
+        </p>
+        <span class="open">開く</span>
+      </a>
+    </section>
+
+    <p class="note">
+      ※ SakuraAme の manifest と privacy は別用途のまま残し、このページだけを作品入口として更新する想定です。
+    </p>
+
+    <footer>
+      © madowaku / madobeno
+    </footer>
+  </main>
 </body>
 </html>
